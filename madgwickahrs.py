@@ -28,7 +28,7 @@ class MadgwickAHRS:
         assert norm(accelerometer) != 0
         accelerometer /= norm(accelerometer)
 
-        # Normalize magnetometer measurement
+        # Normalise magnetometer measurement
         assert norm(magnetometer) != 0
         magnetometer /= norm(magnetometer)
 
@@ -56,11 +56,11 @@ class MadgwickAHRS:
         step /= norm(step)  # normalise step magnitude
 
         # Compute rate of change of quaternion
-        qdot = 0.5 * (q * Quaternion(0, gyroscope[0], gyroscope[1], gyroscope[2])).q - self.beta * step.T
+        qdot = (q * Quaternion(0, gyroscope[0], gyroscope[1], gyroscope[2])) * 0.5 - self.beta * step.T
 
         # Integrate to yield quaternion
         q += qdot * self.samplePeriod
-        self.quaternion = Quaternion(q.q / norm(q.q))  # normalise quaternion
+        self.quaternion = Quaternion(q / norm(q))  # normalise quaternion
 
     def update_imu(self, gyroscope, accelerometer):
         q = self.quaternion
@@ -88,4 +88,4 @@ class MadgwickAHRS:
 
         # Integrate to yield quaternion
         q += qdot * self.samplePeriod
-        self.quaternion = Quaternion(q / norm(q.q))  # normalise quaternion
+        self.quaternion = Quaternion(q / norm(q))  # normalise quaternion
