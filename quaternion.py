@@ -47,10 +47,10 @@ class Quaternion:
         :return:
         """
         if isinstance(other, Quaternion):
-            w = self[3]*other[0] - self[2]*other[1] + self[1]*other[2] + self[0]*other[3]
-            x = self[2]*other[0] + self[3]*other[1] - self[0]*other[2] + self[1]*other[3]
-            y = -self[1]*other[0] + self[0]*other[1] + self[3]*other[2] + self[2]*other[3]
-            z = -self[0]*other[0] - self[1]*other[1] - self[2]*other[2] + self[3]*other[3]
+            w = self[0]*other[0] - self[1]*other[1] - self[2]*other[2] - self[3]*other[3]
+            x = self[0]*other[1] + self[1]*other[0] + self[2]*other[3] - self[3]*other[2]
+            y = self[0]*other[2] - self[1]*other[3] + self[2]*other[0] + self[3]*other[1]
+            z = self[0]*other[3] + self[1]*other[2] - self[2]*other[1] + self[3]*other[0]
 
             return Quaternion(w, x, y, z)
         elif isinstance(other, numbers.Number):
