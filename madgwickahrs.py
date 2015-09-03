@@ -106,7 +106,9 @@ class MadgwickAHRS:
         q = self.quaternion
 
         # Normalise accelerometer measurement
-        assert norm(accelerometer) != 0
+        if norm(accelerometer) is 0:
+            warnings.warn("accelerometer is zero")
+            return
         accelerometer /= norm(accelerometer)
 
         # Gradient descent algorithm corrective step
