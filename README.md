@@ -6,6 +6,9 @@ More information on the algorithm can be found at
 This implementation was done at the Cognitive Systems Lab (CSL) of the
 Karlsruhe Institute of Technology: <http://csl.anthropomatik.kit.edu/>
 
+# Requirements
+* Python 3.x (tested with Python 3.4)
+* NumPy
 
 # License
 
