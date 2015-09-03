@@ -27,6 +27,13 @@ class MadgwickAHRS:
     beta = 1
 
     def __init__(self, sampleperiod=None, quaternion=None, beta=None):
+        """
+        Initialize the class with the given parameters.
+        :param sampleperiod: The sample period
+        :param quaternion: Initial quaternion
+        :param beta: Algorithm gain beta
+        :return:
+        """
         if sampleperiod is not None:
             self.samplePeriod = sampleperiod
         if quaternion is not None:
@@ -35,6 +42,13 @@ class MadgwickAHRS:
             self.beta = beta
 
     def update(self, gyroscope, accelerometer, magnetometer):
+        """
+        Perform one update step with data from a AHRS sensor array
+        :param gyroscope: A three-element array containing the gyroscope data in radians per second.
+        :param accelerometer: A three-element array containing the accelerometer data.
+        :param magnetometer: A three-element array containing the magnetometer data.
+        :return:
+        """
         q = self.quaternion
 
         gyroscope = np.array(gyroscope, dtype=float)
@@ -84,6 +98,11 @@ class MadgwickAHRS:
         self.quaternion = Quaternion(q / norm(q))  # normalise quaternion
 
     def update_imu(self, gyroscope, accelerometer):
+        """
+        Perform one update step with data from a IMU sensor array
+        :param gyroscope: A three-element array containing the gyroscope data in radians per second.
+        :param accelerometer: A three-element array containing the accelerometer data.
+        """
         q = self.quaternion
 
         # Normalise accelerometer measurement
