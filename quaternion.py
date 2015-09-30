@@ -54,7 +54,19 @@ class Quaternion:
         :rtype : Quaternion
         :return: the inverse of the quaternion
         """
-        return Quaternion(self[0], -self[1], -self[2], -self[3])
+        return Quaternion(self._q[0], -self._q[1], -self._q[2], -self._q[3])
+
+    def to_angle_axis(self):
+        """
+        Returns the quaternion's rotation represented by an Euler angle and axis
+        :return: rad, x, y, z
+        """
+        rad = np.arccos(self[0]) * 2
+        imaginary_factor = np.sin(rad / 2)
+        x = self._q[1] / imaginary_factor
+        y = self._q[2] / imaginary_factor
+        z = self._q[3] / imaginary_factor
+        return rad, x, y, z
 
     def __mul__(self, other):
         """
@@ -63,10 +75,10 @@ class Quaternion:
         :return:
         """
         if isinstance(other, Quaternion):
-            w = self[0]*other[0] - self[1]*other[1] - self[2]*other[2] - self[3]*other[3]
-            x = self[0]*other[1] + self[1]*other[0] + self[2]*other[3] - self[3]*other[2]
-            y = self[0]*other[2] - self[1]*other[3] + self[2]*other[0] + self[3]*other[1]
-            z = self[0]*other[3] + self[1]*other[2] - self[2]*other[1] + self[3]*other[0]
+            w = self._q[0]*other._q[0] - self._q[1]*other._q[1] - self._q[2]*other._q[2] - self._q[3]*other._q[3]
+            x = self._q[0]*other._q[1] + self._q[1]*other._q[0] + self._q[2]*other._q[3] - self._q[3]*other._q[2]
+            y = self._q[0]*other._q[2] - self._q[1]*other._q[3] + self._q[2]*other._q[0] + self._q[3]*other._q[1]
+            z = self._q[0]*other._q[3] + self._q[1]*other._q[2] - self._q[2]*other._q[1] + self._q[3]*other._q[0]
 
             return Quaternion(w, x, y, z)
         elif isinstance(other, numbers.Number):
