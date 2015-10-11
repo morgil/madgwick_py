@@ -67,7 +67,7 @@ class MadgwickAHRS:
             return
         magnetometer /= norm(magnetometer)
 
-        h = q * (Quaternion(0, magnetometer[0], magnetometer[1], magnetometer[2]) * q.inv())
+        h = q * (Quaternion(0, magnetometer[0], magnetometer[1], magnetometer[2]) * q.conj())
         b = np.array([0, norm(h[1:3]), 0, h[3]])
 
         # Gradient descent algorithm corrective step

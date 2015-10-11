@@ -48,11 +48,11 @@ class Quaternion:
 
     # Quaternion specific interfaces
 
-    def inv(self):
+    def conj(self):
         """
-        Returns the inverse of the quaternion
+        Returns the conjugate of the quaternion
         :rtype : Quaternion
-        :return: the inverse of the quaternion
+        :return: the conjugate of the quaternion
         """
         return Quaternion(self._q[0], -self._q[1], -self._q[2], -self._q[3])
 
