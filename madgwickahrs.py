@@ -51,9 +51,9 @@ class MadgwickAHRS:
         """
         q = self.quaternion
 
-        gyroscope = np.array(gyroscope.flatten(), dtype=float)
-        accelerometer = np.array(accelerometer.flatten(), dtype=float)
-        magnetometer = np.array(magnetometer.flatten(), dtype=float)
+        gyroscope = np.array(gyroscope, dtype=float).flatten()
+        accelerometer = np.array(accelerometer, dtype=float).flatten()
+        magnetometer = np.array(magnetometer, dtype=float).flatten()
 
         # Normalise accelerometer measurement
         if norm(accelerometer) is 0:
@@ -105,8 +105,8 @@ class MadgwickAHRS:
         """
         q = self.quaternion
 
-        gyroscope = np.array(gyroscope.flatten(), dtype=float)
-        accelerometer = np.array(accelerometer.flatten(), dtype=float)
+        gyroscope = np.array(gyroscope, dtype=float).flatten()
+        accelerometer = np.array(accelerometer, dtype=float).flatten()
 
         # Normalise accelerometer measurement
         if norm(accelerometer) is 0:
