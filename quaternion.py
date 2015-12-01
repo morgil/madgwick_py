@@ -58,11 +58,16 @@ class Quaternion:
 
     def to_angle_axis(self):
         """
-        Returns the quaternion's rotation represented by an Euler angle and axis
+        Returns the quaternion's rotation represented by an Euler angle and axis.
+        If the quaternion is the identity quaternion (1, 0, 0, 0), a rotation along the x axis with angle 0 is returned.
         :return: rad, x, y, z
         """
+        if self[0] == 1 and self[1] == 0 and self[2] == 0 and self[3] == 0:
+            return 0, 1, 0, 0
         rad = np.arccos(self[0]) * 2
         imaginary_factor = np.sin(rad / 2)
+        if abs(imaginary_factor) < 1e-8:
+            return 0, 1, 0, 0
         x = self._q[1] / imaginary_factor
         y = self._q[2] / imaginary_factor
         z = self._q[3] / imaginary_factor
