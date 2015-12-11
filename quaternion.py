@@ -73,6 +73,19 @@ class Quaternion:
         z = self._q[3] / imaginary_factor
         return rad, x, y, z
 
+    def to_euler_angles(self):
+        pitch = np.arcsin(2 * self[1] * self[2] + 2 * self[0] * self[3])
+        if np.abs(self[1] * self[2] + self[3] * self[0] - 0.5) < 1e-8:
+            roll = 0
+            yaw = 2 * np.arctan2(self[1], self[0])
+        elif np.abs(self[1] * self[2] + self[3] * self[0] + 0.5) < 1e-8:
+            roll = -2 * np.arctan2(self[1], self[0])
+            yaw = 0
+        else:
+            roll = np.arctan2(2 * self[0] * self[1] - 2 * self[2] * self[3], 1 - 2 * self[1] ** 2 - 2 * self[3] ** 2)
+            yaw = np.arctan2(2 * self[0] * self[2] - 2 * self[1] * self[3], 1 - 2 * self[2] ** 2 - 2 * self[3] ** 2)
+        return roll, pitch, yaw
+
     def __mul__(self, other):
         """
         multiply the given quaternion with another quaternion or a scalar
