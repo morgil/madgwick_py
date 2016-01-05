@@ -32,13 +32,13 @@ class Quaternion:
         :param y: The second imaginary part if w_or_q is a scalar
         :param z: The third imaginary part if w_or_q is a scalar
         """
-        self._q = None
+        self._q = np.array([1, 0, 0, 0])
 
         if x is not None and y is not None and z is not None:
             w = w_or_q
             q = np.array([w, x, y, z])
         elif isinstance(w_or_q, Quaternion):
-            q = w_or_q.q
+            q = np.array(w_or_q.q)
         else:
             q = np.array(w_or_q)
             if len(q) != 4:
