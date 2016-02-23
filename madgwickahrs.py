@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
     Copyright (c) 2015 Jonas Böer, jonas.boeer@student.kit.edu
 
