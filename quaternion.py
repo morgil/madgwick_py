@@ -74,6 +74,11 @@ class Quaternion:
         z = self._q[3] / imaginary_factor
         return rad, x, y, z
 
+    @staticmethod
+    def from_angle_axis(rad, x, y, z):
+        s = np.sin(rad / 2)
+        return Quaternion(np.cos(rad / 2), x*s, y*s, z*s)
+
     def to_euler_angles(self):
         pitch = np.arcsin(2 * self[1] * self[2] + 2 * self[0] * self[3])
         if np.abs(self[1] * self[2] + self[3] * self[0] - 0.5) < 1e-8:
@@ -85,6 +90,12 @@ class Quaternion:
         else:
             roll = np.arctan2(2 * self[0] * self[1] - 2 * self[2] * self[3], 1 - 2 * self[1] ** 2 - 2 * self[3] ** 2)
             yaw = np.arctan2(2 * self[0] * self[2] - 2 * self[1] * self[3], 1 - 2 * self[2] ** 2 - 2 * self[3] ** 2)
+        return roll, pitch, yaw
+
+    def to_euler123(self):
+        roll = np.arctan2(-2*(self[2]*self[3] - self[0]*self[1]), self[0]**2 - self[1]**2 - self[2]**2 + self[3]**2)
+        pitch = np.arcsin(2*(self[1]*self[3] + self[0]*self[1]))
+        yaw = np.arctan2(-2*(self[1]*self[2] - self[0]*self[3]), self[0]**2 + self[1]**2 - self[2]**2 - self[3]**2)
         return roll, pitch, yaw
 
     def __mul__(self, other):
