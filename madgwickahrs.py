@@ -46,8 +46,8 @@ class MadgwickAHRS:
         """
         Perform one update step with data from a AHRS sensor array
         :param gyroscope: A three-element array containing the gyroscope data in radians per second.
-        :param accelerometer: A three-element array containing the accelerometer data.
-        :param magnetometer: A three-element array containing the magnetometer data.
+        :param accelerometer: A three-element array containing the accelerometer data. Can be any unit since a normalized value is used.
+        :param magnetometer: A three-element array containing the magnetometer data. Can be any unit since a normalized value is used.
         :return:
         """
         q = self.quaternion
@@ -102,7 +102,7 @@ class MadgwickAHRS:
         """
         Perform one update step with data from a IMU sensor array
         :param gyroscope: A three-element array containing the gyroscope data in radians per second.
-        :param accelerometer: A three-element array containing the accelerometer data.
+        :param accelerometer: A three-element array containing the accelerometer data. Can be any unit since a normalized value is used.
         """
         q = self.quaternion
 
