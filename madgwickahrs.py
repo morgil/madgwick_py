@@ -97,7 +97,9 @@ class MadgwickAHRS:
 
         # Gyroscope compensation drift
         gyroscopeQuat = Quaternion(0, gyroscope[0], gyroscope[1], gyroscope[2])
-        gyroscopeQuat -= 2 * (q.conj() * step.T) * self.samplePeriod * self.zeta
+        stepQuat = Quaternion(step.T[0], step.T[1], step.T[2], step.T[3])
+
+        gyroscopeQuat = gyroscopeQuat + (q.conj() * stepQuat) * 2 * self.samplePeriod * self.zeta * -1
 
         # Compute rate of change of quaternion
         qdot = (q * gyroscopeQuat) * 0.5 - self.beta * step.T
