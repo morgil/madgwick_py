@@ -26,13 +26,15 @@ class MadgwickAHRS:
     samplePeriod = 1/256
     quaternion = Quaternion(1, 0, 0, 0)
     beta = 1
+    zeta = 1
 
-    def __init__(self, sampleperiod=None, quaternion=None, beta=None):
+    def __init__(self, sampleperiod=None, quaternion=None, beta=None, zeta=None):
         """
         Initialize the class with the given parameters.
         :param sampleperiod: The sample period
         :param quaternion: Initial quaternion
         :param beta: Algorithm gain beta
+        :param beta: Algorithm gain zeta
         :return:
         """
         if sampleperiod is not None:
@@ -41,6 +43,8 @@ class MadgwickAHRS:
             self.quaternion = quaternion
         if beta is not None:
             self.beta = beta
+        if zeta is not None:
+            self.zeta = zeta
 
     def update(self, gyroscope, accelerometer, magnetometer):
         """
@@ -91,8 +95,14 @@ class MadgwickAHRS:
         step = j.T.dot(f)
         step /= norm(step)  # normalise step magnitude
 
+        # Gyroscope compensation drift
+        gyroscopeQuat = Quaternion(0, gyroscope[0], gyroscope[1], gyroscope[2])
+        stepQuat = Quaternion(step.T[0], step.T[1], step.T[2], step.T[3])
+
+        gyroscopeQuat = gyroscopeQuat + (q.conj() * stepQuat) * 2 * self.samplePeriod * self.zeta * -1
+
         # Compute rate of change of quaternion
-        qdot = (q * Quaternion(0, gyroscope[0], gyroscope[1], gyroscope[2])) * 0.5 - self.beta * step.T
+        qdot = (q * gyroscopeQuat) * 0.5 - self.beta * step.T
 
         # Integrate to yield quaternion
         q += qdot * self.samplePeriod
