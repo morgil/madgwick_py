@@ -12,7 +12,7 @@ Karlsruhe Institute of Technology: <http://csl.anthropomatik.kit.edu/>
 
 # License
 
-Copyright (c) 2015 Jonas Böer, jonas.boeer@student.kit.edu
+Copyright (c) 2015-2022 Jonas Böer, webmaster@morgil.de
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
